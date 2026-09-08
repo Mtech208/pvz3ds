@@ -1,0 +1,1 @@
+"build wii.bat" game -DSEXY_LOG_LEVEL=2

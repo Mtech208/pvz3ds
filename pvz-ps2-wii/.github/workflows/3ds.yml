@@ -1,0 +1,39 @@
+name: 3DS build
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: devkitpro/devkitarm:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install 3DS portlibs
+        shell: bash
+        run: |
+          dkp-pacman -Syu --noconfirm
+          # Core SDL (1.2, shipped by devkitPro) provides the SDL_GetTicks/Init
+          # timing the game relies on; the SDL2-based audio pipeline is excluded
+          # from the 3DS build (DummySoundManager/DummyMusicInterface), so no
+          # SDL2_mixer/libopenmpt is needed.
+          dkp-pacman -S --noconfirm 3ds-sdl 3ds-zlib 3ds-libpng 3ds-libjpeg-turbo 3ds-pkg-config || true
+
+      - name: Run CMake and compile
+        shell: bash
+        run: |
+          source $DEVKITPRO/3dsvars.sh
+          cmake -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$DEVKITPRO/cmake/3ds.cmake
+          cmake --build build
+
+      - name: Upload .3dsx artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: re-plants-vs-zombies.3dsx
+          path: ./build/re-plants-vs-zombies.3dsx
+
+      - name: Upload .elf artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: re-plants-vs-zombies.elf
+          path: ./build/re-plants-vs-zombies.elf

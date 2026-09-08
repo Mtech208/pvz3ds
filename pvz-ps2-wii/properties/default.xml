@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Properties version="1.0" language="es" country="ES" lookandfeel="NORMAL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="">
+<String id="LOCALE">Spanish_Spain</String>
+
+<!-- Framework Strings -->
+	<String id="DIALOG_BUTTON_YES">SÍ</String>
+	<String id="DIALOG_BUTTON_NO">NO</String>
+	<String id="DIALOG_BUTTON_OK">ACEPTAR</String>
+	<String id="DIALOG_BUTTON_CANCEL">CANCELAR</String>
+
+	<String id="UNEXPECTED_ERROR">¡Se ha producido un error inesperado!  Si haces clic en "Enviar informe", nos enviarás información de depuración que puede ayudarnos a solucionar el problema en un futuro.&cr;&cr;También puedes ponerte directamente en contacto con nosotros enviando un correo electrónico a la dirección feedback@popcap.com.</String>
+
+	<String id="PLEASE_HELP">Por favor, comunícanos toda la información de la que dispongas sobre este fallo. ¿Es la primera vez que ocurre? ¿Has jugado ya a otros juegos de PopCap Deluxe sin problemas? ¿Has actualizado últimamente los drivers de tu ordenador u otro software que pueda estar interfiriendo con este programa?</String>
+
+	<String id="FAILED_CONNECT_POPCAP">No se ha podido conectar con los servidores de PopCap.  Comprueba tu conexión a Internet, por favor.&cr;Si dispones de una conexión por línea conmutada, puede que tengas que conectarte manualmente a tu proveedor de servicios de Internet.</String>
+
+	<String id="HARDWARE_ACCEL_SWITCHED_ON">Se ha activado la aceleración 3D en esta sesión.&cr;Si esto hace que el juego tenga un rendimiento más lento, deberás desactivarla.&cr;¿Quieres mantener la aceleración 3D activada?</String>
+
+	<String id="HARDWARE_ACCEL_CONFIRMATION">Confirmación de la aceleración 3D</String>
+
+	<String id="HARDWARE_ACCEL_NOT_WORKING">Es posible que la aceleración 3D no haya funcionado correctamente en esta sesión.&cr;Si detectas problemas con los gráficos, puede que tengas que desactivar la aceleración 3D.&cr;¿Quieres mantener la aceleración 3D activada?</String>
+
+	<String id="FATAL_ERROR">ERROR FATAL</String>
+
+	<String id="PLEASE_SET_COLOR_DEPTH">Por favor, cambia la profundidad de color de tu escritorio a 16 bits.</String>
+
+	<String id="FAILED_INIT_DIRECTDRAW">No se ha podido iniciar DirectDraw:&nbsp;</String>
+
+	<String id="UNABLE_OPEN_PROPERTIES">No se puede abrir el archivo de propiedades&nbsp;</String>
+
+	<String id="PROPERTIES_SIG_FAILED">Se ha producido un error en la comprobación de firma&nbsp;</String>
+
+	<String id="INVALID_COMMANDLINE_PARAM">Parámetro para la línea de comando no válido:</String> 
+
+	<String id="APP_REQUIRES_DIRECTX">Esta aplicación necesita DirectX para funcionar.  Puedes descargar DirectX de http://www.microsoft.com/directx</String>
+	<String id="YOU_NEED_DIRECTX">Necesitas DirectX</String>
+
+</Properties>

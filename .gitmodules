@@ -1,0 +1,3 @@
+[submodule "pvz-ps2-wii"]
+	path = pvz-ps2-wii
+	url = https://github.com/OptiJuegos/pvz-ps2-wii.git

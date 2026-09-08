@@ -1,0 +1,70 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "wii-release",
+      "displayName": "Wii Release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/wii-release",
+      "toolchainFile": "${sourceDir}/cmake/wii_toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_MAKE_PROGRAM": "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe"
+      },
+      "environment": {
+        "DEVKITPRO": "C:/devkitPro",
+        "DEVKITPPC": "C:/devkitPro/devkitPPC",
+        "PATH": "C:/devkitPro/devkitPPC/bin;C:/devkitPro/tools/bin;$penv{PATH}"
+      }
+    },
+    {
+      "name": "ps2-release",
+      "displayName": "PS2 Release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/ps2-release",
+      "toolchainFile": "${sourceDir}/CMake/ps2_toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_MAKE_PROGRAM": "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe"
+      },
+      "environment": {
+        "PS2DEV": "${sourceDir}/psdevwindows",
+        "PS2SDK": "${sourceDir}/psdevwindows/ps2sdk",
+        "PATH": "${sourceDir}/psdevwindows/ee/bin;${sourceDir}/psdevwindows/iop/bin;${sourceDir}/psdevwindows/dvp/bin;${sourceDir}/psdevwindows/bin;$penv{PATH}"
+      }
+    },
+    {
+      "name": "3ds-release",
+      "displayName": "3DS Release",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/3ds-release",
+      "toolchainFile": "${sourceDir}/CMake/3ds_toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_MAKE_PROGRAM": "C:/devkitPro/msys2/usr/bin/make.exe"
+      },
+      "environment": {
+        "DEVKITPRO": "C:/devkitPro",
+        "DEVKITARM": "C:/devkitPro/devkitARM",
+        "PATH": "C:/devkitPro/devkitARM/bin;C:/devkitPro/tools/bin;C:/devkitPro/msys2/usr/bin;$penv{PATH}"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "wii-release",
+      "configurePreset": "wii-release",
+      "configuration": "Release"
+    },
+    {
+      "name": "ps2-release",
+      "configurePreset": "ps2-release",
+      "configuration": "Release"
+    },
+    {
+      "name": "3ds-release",
+      "configurePreset": "3ds-release",
+      "configuration": "Release"
+    }
+  ]
+}

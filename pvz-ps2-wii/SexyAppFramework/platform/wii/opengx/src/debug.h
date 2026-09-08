@@ -1,0 +1,90 @@
+/*****************************************************************************
+Copyright (c) 2011  David Guillen Fandos (david@davidgf.net)
+All rights reserved.
+
+Attention! Contains pieces of code from others such as Mesa and GRRLib
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. Neither the name of copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived
+   from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL COPYRIGHT HOLDERS OR CONTRIBUTORS
+BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
+#ifndef OGX_DEBUG_H
+#define OGX_DEBUG_H
+
+#include <ogc/system.h>
+#include <errno.h>
+#include <stdio.h>
+
+typedef enum {
+    OGX_LOG_WARNING = 1 << 0,
+    OGX_LOG_CALL_LISTS = 1 << 1,
+    OGX_LOG_LIGHTING = 1 << 2,
+    OGX_LOG_TEXTURE = 1 << 3,
+    OGX_LOG_STENCIL = 1 << 4,
+    OGX_LOG_CLIPPING = 1 << 5,
+    OGX_LOG_SHADER = 1 << 6,
+} OgxLogMask;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern OgxLogMask _ogx_log_mask;
+
+#define OGX_JOIN_INNER(a, b) a##b
+#define OGX_JOIN(a, b) OGX_JOIN_INNER(a, b)
+
+/* Route warnings through the Wii session log and rate-limit each call site.
+ * Repeated render-state failures can otherwise emit thousands of SYS_Report
+ * calls per frame and change the timing of the bug being diagnosed. */
+void _ogx_warning_report(const char *file, int line, unsigned count,
+                         const char *format, ...)
+    __attribute__((format(printf, 4, 5)));
+
+#define warning(format, ...) do { \
+    if (_ogx_log_mask & OGX_LOG_WARNING) { \
+        static unsigned OGX_JOIN(_ogx_warning_count_, __LINE__) = 0; \
+        const unsigned _ogx_warning_count = \
+            ++OGX_JOIN(_ogx_warning_count_, __LINE__); \
+        if (_ogx_warning_count <= 4 || \
+            (_ogx_warning_count & (_ogx_warning_count - 1)) == 0) { \
+            _ogx_warning_report(__FILE__, __LINE__, _ogx_warning_count, \
+                                format, ##__VA_ARGS__); \
+        } \
+    } \
+} while (0)
+
+#define debug(mask, format, ...) do { \
+    if (_ogx_log_mask & mask) { \
+        SYS_Report(format "\n", ##__VA_ARGS__); \
+    } \
+} while (0)
+
+void _ogx_log_init();
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
+#endif /* OGX_DEBUG_H */
